@@ -29,7 +29,6 @@
 import sys
 
 import lager
-import storage_config
 
 
 SERVER_NAME = 'test'
@@ -85,44 +84,13 @@ def test_sign_url(sign_url_name, sign_url):
     print('[%s] invalid url: %s' % (sign_url_name, str(sign_url.generate_download_url(['t3',u'エグゼリカ01.jpg'], 60*1))))
     print('')
 
-
-def test_gcs():
-    gcs = lager.new_storage_from_config('GoogleCloudStorage', SERVER_NAME, storage_config.STORAGE_CONFIG_GC)
-    test_storage('gcs', gcs, 'image/jpeg')
-
-
-def test_gcs_sign_url():
-    gcs_sign_url = lager.new_sign_url_from_config('GoogleCloudStorageSignUrl', SERVER_NAME, storage_config.STORAGE_CONFIG_GC)
-    test_sign_url('gcs sign url', gcs_sign_url)
-
-
-def test_gcs_boto():
-    gcs = lager.new_storage_from_config('GoogleCloudStorage_Boto', SERVER_NAME+'2', storage_config.STORAGE_CONFIG_GC)
-    test_storage('gcs-boto', gcs)
-
-
-def test_s3():
-    s3 = lager.new_storage_from_config('AmazonS3Storage', SERVER_NAME, storage_config.STORAGE_CONFIG_AWS)
-    test_storage('s3', s3)
-
-
-def test_cloudfront_sign_url():
-    cf_sign_url = lager.new_sign_url_from_config('AmazonCloudFrontSignUrl', SERVER_NAME, storage_config.STORAGE_CONFIG_AWS)
-    test_sign_url('cloudfront sign url', cf_sign_url)
-
-
-def test_cloudfront_s3():
-    cf = lager.new_storage_from_config('AmazonCloudFrontS3Storage', SERVER_NAME+'2', storage_config.STORAGE_CONFIG_AWS)
-    test_storage('cloudfront-s3', cf)
+def test_oss():
+    cf = lager.new_storage_from_config('AliYunOssStorage', 'voez_server', None)
+    test_storage('oss', cf)
 
 
 def main(argv=sys.argv[:]):
-    test_gcs()
-    test_gcs_sign_url()
-    test_gcs_boto()
-    test_s3()
-    test_cloudfront_sign_url()
-    test_cloudfront_s3()
+    test_oss()
     return 0
 
 

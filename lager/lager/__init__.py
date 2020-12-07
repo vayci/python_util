@@ -27,7 +27,6 @@
 
 
 from . import storage
-from . import sign_url
 
 
 def new_storage_from_config(storage_class_name, server_name, config):
@@ -53,6 +52,13 @@ def new_storage_from_config(storage_class_name, server_name, config):
             'aws_access_key_id': config['AWS_ACCESS_KEY_ID'],
             'aws_secret_access_key': config['AWS_SECRET_ACCESS_KEY'],
         }
+    elif storage_class_name == 'AliYunOssStorage':
+        kwargs = {
+            'endpoint': 'http://oss-cn-shanghai.aliyuncs.com',
+            'bucket_name': 'zizouqi-openplatform',
+            'oss_access_key_id': '',
+            'oss_secret_access_key': '',
+        }
     elif storage_class_name == 'AmazonCloudFrontS3Storage':
         kwargs = {
             'distribution_id': config['AWS_CF_DISTRIBUTION_ID'],
@@ -65,25 +71,4 @@ def new_storage_from_config(storage_class_name, server_name, config):
         kwargs = {}
 
     return storage.new_storage(storage_class_name, server_name, **kwargs)
-
-
-def new_sign_url_from_config(sign_url_class_name, server_name, config):
-    if sign_url_class_name == 'GoogleCloudStorageSignUrl':
-        kwargs = {
-            'bucket_name': config['GCS_BUCKET_NAME'],
-        }
-        if 'GC_JSON_CREDENTIALS_PATH' in config:
-            kwargs['json_credentials_path'] = config['GC_JSON_CREDENTIALS_PATH']
-        if 'GC_JSON_CREDENTIALS_STRING' in config:
-            kwargs['json_credentials_string'] = config['GC_JSON_CREDENTIALS_STRING']
-    elif sign_url_class_name == 'AmazonCloudFrontSignUrl':
-        kwargs = {
-            'domain_name': config['AWS_CF_DOMAIN_NAME'],
-            'key_pair_id': config['AWS_CF_KEY_PAIR_ID'],
-            'private_key_string': config['AWS_CF_PRIVATE_KEY_STRING'],
-        }
-    else:
-        kwargs = {}
-
-    return sign_url.new_sign_url(sign_url_class_name, server_name, **kwargs)
 
