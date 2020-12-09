@@ -54,10 +54,10 @@ def new_storage_from_config(storage_class_name, server_name, config):
         }
     elif storage_class_name == 'AliYunOssStorage':
         kwargs = {
-            'endpoint': 'http://oss-cn-shanghai.aliyuncs.com',
-            'bucket_name': 'zizouqi-openplatform',
-            'oss_access_key_id': '',
-            'oss_secret_access_key': '',
+            'endpoint': config['ALIYUN_OSS_ENDPOINT'],
+            'bucket_name': config['ALIYUN_OSS_BUCKET_NAME'],
+            'oss_access_key_id': config['ALIYUN_OSS_KEY_ID'],
+            'oss_secret_access_key': config['ALIYUN_OSS_ACCESS_KEY'],
         }
     elif storage_class_name == 'AmazonCloudFrontS3Storage':
         kwargs = {
