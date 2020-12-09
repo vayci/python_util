@@ -121,7 +121,8 @@ class AliYunOssStorage(Storage):
         path = self._get_key_name_origin(name_tuple)
         exist = self.bucket.object_exists(path)
         if exist:
-            fp = self.bucket.get_object(path).read()
+            data = self.bucket.get_object(path).read()
+            fp.write(data)
             return True
         else:
             return False
