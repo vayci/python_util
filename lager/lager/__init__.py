@@ -27,7 +27,7 @@
 
 
 from . import storage
-
+from . import sign_url
 
 def new_storage_from_config(storage_class_name, server_name, config):
     if storage_class_name == 'GoogleCloudStorage':
@@ -71,4 +71,17 @@ def new_storage_from_config(storage_class_name, server_name, config):
         kwargs = {}
 
     return storage.new_storage(storage_class_name, server_name, **kwargs)
+
+def new_sign_url_from_config(sign_url_class_name, server_name, config):
+    if sign_url_class_name == 'AliYunOssStorageSignUrl':
+        kwargs = {
+            'endpoint': config['ALIYUN_OSS_ENDPOINT'],
+            'bucket_name': config['ALIYUN_OSS_BUCKET_NAME'],
+            'oss_access_key_id': config['ALIYUN_OSS_KEY_ID'],
+            'oss_secret_access_key': config['ALIYUN_OSS_ACCESS_KEY'],
+        }
+    else:
+        kwargs = {}
+
+    return sign_url.new_sign_url(sign_url_class_name, server_name, **kwargs)
 
