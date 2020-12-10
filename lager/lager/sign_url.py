@@ -52,7 +52,7 @@ class AliYunOssStorageSignUrl(SignUrl):
 
     def public_download_url(self, name_tuple):
         path = self._get_key_name_origin(name_tuple)
-        return self.bucket_name+'.'+self.endpoint+'/'+path
+        return 'https://'+self.bucket_name+'.'+self.endpoint.replace('https://','')+'/'+path
 
 
 def new_sign_url(sign_url_class_name, *args, **kwargs):
